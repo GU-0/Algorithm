@@ -20,10 +20,10 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-
 arr = sorted([list(map(int, input().split())) for _ in range(n)])
 
 
+# Binary Search 후 값이 들어갈 idx 반환
 def BS(arr, s, e, n):
     while s < e:
         m = (s + e) // 2
@@ -34,6 +34,8 @@ def BS(arr, s, e, n):
     return e
 
 
+# 다음 항목이 부분 배열의 마지막 항목보다 크다면 끝에 붙이고,
+# 작다면 적절한 위치를 BS를 통해 구하여 해당 위치에 삽입한다. <- 최대 길이 유지 가능
 def LIS(arr, l):
     li = []
     max_len = 0
