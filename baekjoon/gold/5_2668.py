@@ -15,7 +15,6 @@
 
 => 첫째 줄에 뽑힌 정수들의 개수 출력, 다음 줄부터는 뽑힌 정수들을 오름차순으로 한 줄에 하나씩 출력
 """
-# dfs로 탐색, 순환 발생 시 ans 리스트에 추가
 
 import sys
 
@@ -51,6 +50,40 @@ for i in range(1, n + 1):
     dfs(i)
 ans = sorted(list(set(ans)))
 
+print(len(ans))
+for n in ans:
+    print(n)
+
+
+# 다른 코드 참고
+# up, down set 대신 dfs에 start 파라미터 추가, visited가 True이고 i == start라면 순환이 발생했다는 것.
+# visited 초기화 main의 반복문 안에서 수행.
+import sys
+
+input = sys.stdin.readline
+
+
+def dfs(i, start):
+    if visited[i] == True:
+        if i == start:
+            ans.add(start)
+        return
+
+    visited[i] = True
+    dfs(arr[i], start)
+
+
+n = int(input())
+arr = [-1]
+for _ in range(n):
+    arr.append(int(input()))
+ans = set()
+
+for i in range(1, n + 1):
+    visited = [False] * (n + 1)
+    dfs(i, i)
+
+ans = sorted(ans)
 print(len(ans))
 for n in ans:
     print(n)
