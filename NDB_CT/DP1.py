@@ -18,7 +18,6 @@ a_n+2 = max(a_n + arr[n+2], a_n+1) (n번째 공격 후 n+2번째 공격 or n+1�
 import sys
 import time
 
-
 input = sys.stdin.readline
 
 
