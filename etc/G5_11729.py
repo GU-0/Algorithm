@@ -1,4 +1,4 @@
-"""896ms
+"""56ms
 [Gold 5] 백준 11729번 하노이 탑 이동 순서
 
 1. 한 번에 한 개의 원판만 옮길 수 있음
@@ -17,20 +17,23 @@ input = sys.stdin.readline
 
 
 def main():
+    N = int(input().rstrip())
+    cache = {}
+
     def hanoi(n, start, end):
         if n == 1:
-            print(start, end)
-            return
-        else:
-            oth = 6 - start - end
-            hanoi(n - 1, start, oth)
-            print(start, end)
-            hanoi(n - 1, oth, end)
+            return f"{start} {end}\n"
 
-    N = int(input().rstrip())
+        if (n, start, end) in cache:
+            return cache[(n, start, end)]
+
+        oth = 6 - start - end
+        tmp = (hanoi(n - 1, start, oth), f"{start} {end}\n", hanoi(n - 1, oth, end))
+        cache[(n, start, end)] = "".join(tmp)
+        return cache[(n, start, end)]
 
     print(2**N - 1)
-    hanoi(N, 1, 3)
+    print(hanoi(N, 1, 3))
 
 
 if __name__ == "__main__":
