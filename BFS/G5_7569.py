@@ -1,4 +1,4 @@
-"""1876ms
+"""1628ms
 [Gold 5] 백준 7569번 토마토
 가로 M, 세로 N 크기 박스에 격자 칸으로 토마토, 수직으로 H만큼 쌓아서 보관
 익은 토마토의 인접한 익지 않은 토마토는 하루가 지나면 익음. (상하좌우전후 6방향, 대각선 X), 혼자서는 못 익음
@@ -44,11 +44,9 @@ def main():
     if tmp == m * n * h:
         print(0)
         exit()
-
-    # 익은 토마토가 존재하지 않는 경우 바로 종료
-    # if len(queue) == 0:
-    #     print(-1)
-    #     exit()
+    if not queue:
+        print(-1)
+        exit()
 
     while queue:
         z, y, x = queue.popleft()
@@ -59,15 +57,13 @@ def main():
                 if mat[nz][ny][nx] == 0:
                     mat[nz][ny][nx] = mat[z][y][x] + 1
                     queue.append((nz, ny, nx))
-                    ans = max(ans, mat[nz][ny][nx])
 
-    for i in range(h):
-        for j in range(n):
-            for k in range(m):
-                if mat[i][j][k] == 0:
-                    print(-1)
-                    exit()
-                ans = max(ans, mat[i][j][k])
+    for box in mat:
+        for row in box:
+            if 0 in row:
+                print(-1)
+                exit()
+            ans = max(ans, max(row))
     print(ans - 1)
 
 
