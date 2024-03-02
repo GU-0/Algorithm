@@ -50,44 +50,46 @@ def get_observe_dir(type):
             return [[0, 1, 2, 3]]
 
 
-def observe(r, c, dir, mat_copy):
-    dr, dc = dirs[dir]
-    while True:
-        r, c = r + dr, c + dc
-        if r < 0 or r >= N or c < 0 or c >= M or mat_copy[r][c] == 6:
-            break
-        if mat_copy[r][c] == 0:
-            mat_copy[r][c] = -1
+def observe(r, c, directions, mat_copy):
+    for dir in directions:
+        nr, nc = r, c
+        while True:
+            nr += dirs[dir][0]
+            nc += dirs[dir][1]
+            if 0 <= nr < N and 0 <= nc < M and mat_copy[nr][nc] != 6:
+                if mat_copy[nr][nc] == 0:
+                    mat_copy[nr][nc] = -1
+            else:
+                break
 
 
 def dfs(depth, mat):
-    global min_area
     if depth == len(cctvs):
-        cnt = sum(row.count(0) for row in mat)
-        min_area = min(min_area, cnt)
-        return
+        return sum(row.count(0) for row in mat)
 
-    mat_copy = deepcopy(mat)
     r, c, type = cctvs[depth]
+    ret = float("inf")
 
     for direction in get_observe_dir(type):
-        for dir in direction:
-            observe(r, c, dir, mat_copy)
-        dfs(depth + 1, mat_copy)
-        mat_copy = deepcopy(mat)
+        mat_copy = [row[:] for row in mat]
+        observe(r, c, direction, mat_copy)
+
+        ret = min(ret, dfs(depth + 1, mat_copy))
+
+    return ret
 
 
 if __name__ == "__main__":
     N, M = map(int, input().split())
     mat = [list(map(int, input().split())) for _ in range(N)]
-    dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # 상하좌우
+    dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
     cctvs = []
     for i in range(N):
         for j in range(M):
             if 1 <= mat[i][j] <= 5:
                 cctvs.append((i, j, mat[i][j]))
+
     #
-    min_area = float("inf")
-    dfs(0, mat)
-    print(min_area)
+    ans = dfs(0, mat)
+    print(ans)
