@@ -44,7 +44,7 @@ def solution(today, terms, privacies):
             p_year, p_month, p_day, period
         )
 
-        if (deadline_year, deadline_month, deadline_day) < (
+        if (deadline_year, deadline_month, deadline_day)(
             today_year,
             today_month,
             today_day,
