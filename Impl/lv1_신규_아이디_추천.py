@@ -24,7 +24,7 @@ def solution(new_id):
     possible_list = []
     for i in range(97, 123):
         possible_list.append(chr(i))
-    for i in range(47, 58):
+    for i in range(48, 58):
         possible_list.append(chr(i))
     possible_list += ["-", "_", "."]
     # step 1
@@ -54,10 +54,7 @@ def solution(new_id):
     if not id:
         id = "a"
     # step 6
-    if len(id) > 15:
-        id = id[:15]
-        if id[-1] == ".":
-            id = id[:-1]
+    id = id[:15].rstrip(".")
     # step 7
     if len(id) < 3:
         n = 3 - len(id)
