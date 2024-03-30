@@ -17,8 +17,7 @@ def solution(X, Y):
             cnt_set[y] -= 1
 
     if len(tmp) == 0:
-        print(answer)
-        return
+        return answer
     else:
         answer = ""
         tmp.sort(reverse=True)
@@ -26,7 +25,5 @@ def solution(X, Y):
             answer += e
         if answer[0] == "0":
             answer = "0"
-        print(answer)
 
-
-solution("5525", "1255")
+        return answer
